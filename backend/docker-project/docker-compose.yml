@@ -1,0 +1,17 @@
+services:
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - dbdata:/data/db
+    ports:
+      - "27017:27017"
+  custom_app:
+    build: ./
+    image: "docker-setup1"
+    container_name: "my_docker_app"
+    ports:
+      - "3000:3000"
+    environment:
+      name: mongodb
+volumes:
+  dbdata:

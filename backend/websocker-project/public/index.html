@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello from the Server</h1>
+    <div id="messages"></div>
+    <input type="text" id="input" placeholder="Enter the message" />
+    <button onclick="btnHandler()" id="button">Send</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        const inputMessage = document.getElementById("input");
+        const btnClick = document.getElementById("buttton");
+        const btnHandler = () => {
+            const inputValue = inputMessage.value;
+            socket.emit("input-message",inputValue);
+            inputMessage.value = ""
+        }
+        socket.on("server-message",(message) => {
+            const ptag = document.createElement('p');
+            ptag.innerText = message;
+            const div = document.getElementById("messages");
+            div.appendChild(ptag);
+        })
+    </script>
+</body>
+</html>
